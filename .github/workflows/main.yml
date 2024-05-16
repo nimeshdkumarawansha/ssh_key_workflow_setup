@@ -26,4 +26,4 @@ jobs:
           cd /var/www/ssh_key_workflow_setup/
           git pull origin main
           git status
-          npm install --only=prod
+        # npm install --only=prod
