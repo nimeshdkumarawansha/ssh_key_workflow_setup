@@ -26,4 +26,5 @@ jobs:
           cd /var/www/ssh_key_workflow_setup/
           git pull origin main
           git status
+          composer install
         # npm install --only=prod
