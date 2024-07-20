@@ -1,14 +1,20 @@
 name: Deploy
 
+# Controls when the action will run. 
 on:
+  # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ main ]
 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  # This workflow contains a single job called "build"
   build:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    steps:
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:       
     - name: Deploy using ssh
       uses: appleboy/ssh-action@master
       with:
@@ -16,5 +22,12 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         protocol: tcp
-        timeout: 60s # Increased timeout
-        proxy_timeout: 60s # Increased proxy timeout
+        timeout: 30s
+        proxy_port: 22
+        proxy_timeout: 30s
+        script: |
+          cd /var/www/ssh_key_workflow_setup/
+          git pull origin main
+          git status
+          composer install
+        # npm install --only=prod
